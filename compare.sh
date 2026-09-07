@@ -4,13 +4,20 @@
 #   改善後: エージェント + 参加者が作った仕組み（判断の一部が Python 側）
 # どちらもエージェントを通す。違うのは渡す道具だけ。
 #
-#   ./compare-claude.sh "python3 pipeline.py --query-file query.json"
+#   ./compare-claude.sh "python3 pipeline.py --query-file query.json"   # Windows は python
 #   ./compare-codex.sh  "python3 pipeline.py --query-file query.json"
 #
 # 直接 ./compare.sh を呼んでもよい（既定は claude、AGENT=... で切り替え）。
 set -u
 # mktemp -d は BSD（macOS）だとテンプレート必須の場合があるのでフォールバックする
 OUT=$(mktemp -d 2>/dev/null || mktemp -d -t compare)
+
+# python の名前は環境で違う（Windows は python3 が無い）。PY=python などで上書きできる。
+if [ -z "${PY:-}" ]; then
+  if command -v python3 >/dev/null; then PY=python3
+  elif command -v python >/dev/null; then PY=python
+  else echo "python が見つかりません。PY=<コマンド名> で指定してください。" >&2; exit 1; fi
+fi
 AGENT=${AGENT:-claude}
 
 REQUEST='「2024年以降に公開された Agent 関連の論文で、日本の研究機関に所属する著者が含まれ、
@@ -21,7 +28,7 @@ COMMON='制約: data/ の中身を直接見ない。内部実装から答えを�
 BEFORE="このリポジトリの tools.py が提供するインターフェースだけを使って、次の要求に答えてください。
 ${REQUEST}
 ${COMMON}
-コマンドは \"python3 tools.py ...\" の単一コマンドだけを使い、パイプ・ループ・python3 -c は使わないこと。"
+コマンドは \"${PY} tools.py ...\" の単一コマンドだけを使い、パイプ・ループ・${PY} -c は使わないこと。"
 
 if ! command -v "$AGENT" >/dev/null; then
   echo "$AGENT コマンドが見つかりません。" >&2; exit 1
@@ -45,12 +52,12 @@ run_agent() {
     claude)
       claude -p "$prompt" --allowedTools "Bash(${pattern}:*),Bash(echo:*)" --permission-mode acceptEdits \
         --output-format json > "$OUT/$tag.json" 2>"$OUT/$tag.err" || true
-      python3 - "$OUT/$tag.json" "$OUT/$tag.txt" "$OUT/$tag.turns" <<'PY' || true
+      "$PY" - "$OUT/$tag.json" "$OUT/$tag.txt" "$OUT/$tag.turns" <<'PYJSON' || true
 import json, sys
 d = json.load(open(sys.argv[1]))
 open(sys.argv[2], "w").write(d.get("result") or "")
 open(sys.argv[3], "w").write(str(d.get("num_turns", "?")))
-PY
+PYJSON
       ;;
     codex) codex exec "$prompt" > "$OUT/$tag.txt" 2>&1 || true ;;
     *)     "$AGENT" "$prompt" > "$OUT/$tag.txt" 2>&1 || true ;;
@@ -69,7 +76,7 @@ report() {  # $1=見出し  $2=タグ
 }
 
 echo "改善前を実行中（1〜2 分）..."
-run_agent before "$BEFORE" "python3 tools.py"
+run_agent before "$BEFORE" "$PY tools.py"
 
 if [ $# -ge 1 ]; then
   AFTER="このリポジトリには、次のコマンドで動く論文検索の仕組みがあります。
