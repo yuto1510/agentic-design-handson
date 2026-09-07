@@ -17,6 +17,7 @@
 - エージェントは Claude Code / Codex のどちらでもよい（[使い分け](#claude-code-以外を使う場合)）
 - Step 1 / 3 は**新しいセッションで始める**（下記）。Step 4 はターミナルでの実行のみ
 - 依存は Python 3 標準ライブラリのみ
+- 動作環境: macOS / Linux はそのまま。**Windows は WSL か Git Bash** が必要（`.sh` を実行するため）
 
 ## Claude Code 以外を使う場合
 
@@ -288,20 +289,6 @@ flowchart TD
 
 Step 1 と骨格は同じ。変わるのは **tool の粒度**と、**Claude 側に残る処理**。
 
-### LLM から Python に渡るもの
-
-Claude は通さない。普通のターミナルでそのまま動く。
-
-```bash
-git checkout deterministic
-
-echo '{"keywords":["agent"],"year_min":2024,"countries":["JP"],"exclude_retracted":true}' \
-  | python3 workflow.py
-```
-
-**この JSON が、LLM から Python に渡る全部。** 論文ごとの判断は 1 つも入っていない。
-Step 4 の「改善後」で Claude がやっていたのは、要求からこの JSON を組み立てて渡し、
-返ってきた結果を読むことだけ。
 
 ### 改善前と並べる
 
