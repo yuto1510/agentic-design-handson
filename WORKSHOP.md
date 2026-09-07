@@ -288,13 +288,17 @@ flowchart TD
 
 Step 1 と骨格は同じ。変わるのは **tool の粒度**と、**Claude 側に残る処理**。
 
+### 動かす
+
 ```bash
 git checkout deterministic
-head -20 workflow.py
 
 echo '{"keywords":["agent"],"year_min":2024,"countries":["JP"],"exclude_retracted":true}' \
   | python3 workflow.py
 ```
+
+これが workflow の全入力。Step 4 の「改善後」で Claude がやっていたのは、
+この JSON を組み立てて渡し、返ってきた結果を読むことだけ。
 
 ### Step 2 の表に対する解答例
 
@@ -329,17 +333,14 @@ echo '{"keywords":["agent"],"year_min":2024,"countries":["JP"],"exclude_retracte
 
 </details>
 
-### 2 つの diff を並べる
+### コードを見る
 
 ```bash
-git diff agentic..improve-<yourname>   # 自分が動かしたもの
-git diff agentic..deterministic        # 解答例が動かしたもの
+git diff agentic..deterministic
 ```
 
-`deterministic` は唯一の正解ではなく、一つの設計例。
-比べる観点:
+`tools.py` が消えて `workflow.py` が増えるだけ。上の表で Python 側になった 7 項目が、
+この 96 行に入っている。
 
-- 自分はどこに境界を引き、解答例はどこに引いたか
-- 解答例でも Claude に残っている判断は何か
-- 自分の実装で Python 側に移した処理は、仕様として書かれているか、答えがハードコードされているか
+`deterministic` は唯一の正解ではなく、一つの設計例。
 
