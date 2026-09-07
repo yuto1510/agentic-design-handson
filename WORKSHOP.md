@@ -296,6 +296,39 @@ echo '{"keywords":["agent"],"year_min":2024,"countries":["JP"],"exclude_retracte
   | python3 workflow.py
 ```
 
+### Step 2 の表に対する解答例
+
+<details>
+<summary>Step 2 を自分で埋めてから開く（クリックで展開）</summary>
+
+`workflow.py` の実装がどちらを選んでいるか。
+
+| # | 項目 | 解答例 | 実装 |
+|---|---|---|---|
+| 1 | semantic interpretation | **LLM** | 構造化クエリ JSON を Claude が組む |
+| 2 | pagination | Python | `fetch_all()` が最終ページまで辿る |
+| 3 | metadata lookup | Python | `author_ids` を全件引く（第 1 著者で止めない） |
+| 4 | normalization | Python | `normalize_country()`。判定不能なら推測せず除外 |
+| 5 | filtering | Python | `year_min` / `retracted` / `countries` |
+| 6 | deduplication | Python | `dedupe()`。DOI と正規化タイトルの両方で畳む |
+| 7 | 何が日本の機関か | Python | `ALIASES` と `JP_INSTITUTIONS` をコードに固定 |
+| 8 | この論文は Agent 関連か | **LLM** | `keywords` の選び方だけ。コード側に可否判定はない |
+| 9 | この 2 件は同じ論文か | Python | 正規化タイトル一致 + 査読版 > preprint で代表を決める |
+
+**LLM に残っているのは 1 と 8 だけ。** 9 項目のうち 7 項目がコード側にある。
+
+8 が LLM 側なのは移し忘れではない。「Agent 関連」に何を含めるかは要求の意味であって、
+仕様に書き切ると要求の幅を殺す。1 と 8 は同じことを別の粒度で聞いている
+（1 が検索語の選定、8 がその結果の可否）。
+
+自分の表と見比べる箇所:
+
+- 7 を LLM 側にした場合、機関名の一覧は毎回 LLM が書く。網羅性を保証するものは何か
+- 8 を Python 側にした場合、「Agent 関連」の定義をコードに書いたことになる。それは仕様か
+- 9 を DOI 一致だけにした場合、DOI が違う preprint と査読版は両方残る
+
+</details>
+
 ### 2 つの diff を並べる
 
 ```bash
