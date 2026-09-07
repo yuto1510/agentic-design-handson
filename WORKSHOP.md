@@ -303,6 +303,23 @@ echo '{"keywords":["agent"],"year_min":2024,"countries":["JP"],"exclude_retracte
 Step 4 の「改善後」で Claude がやっていたのは、要求からこの JSON を組み立てて渡し、
 返ってきた結果を読むことだけ。
 
+### 改善前と並べる
+
+```bash
+./compare-claude.sh "python3 workflow.py"
+```
+
+`agentic` の道具立て（`tools.py`）と解答例（`workflow.py`）を、同じ要求で 1 回ずつ回す。
+Step 4 で自分の設計を測ったのと同じスクリプト。実測値:
+
+```
+改善前: claude + tools.py     やりとり 30 回 / 77 秒
+改善後: claude + workflow.py  やりとり 14 回 / 61 秒
+結果は同じ
+```
+
+自分の Step 4 の数字と並べる。
+
 ### Step 2 の表に対する解答例
 
 <details>
