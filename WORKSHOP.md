@@ -305,7 +305,7 @@ echo '{"keywords":["agent"],"year_min":2024,"countries":["JP"],"exclude_retracte
 <details>
 <summary>Step 2 を自分で埋めてから開く（クリックで展開）</summary>
 
-`workflow.py` の実装がどちらを選んでいるか。
+`workflow.py`（96 行）の実装がどちらを選んでいるか。
 
 | # | 項目 | 解答例 | 実装 |
 |---|---|---|---|
@@ -332,15 +332,6 @@ echo '{"keywords":["agent"],"year_min":2024,"countries":["JP"],"exclude_retracte
 - 9 を DOI 一致だけにした場合、DOI が違う preprint と査読版は両方残る
 
 </details>
-
-### コードを見る
-
-```bash
-git diff agentic..deterministic
-```
-
-`tools.py` が消えて `workflow.py` が増えるだけ。上の表で Python 側になった 7 項目が、
-この 96 行に入っている。
 
 `deterministic` は唯一の正解ではなく、一つの設計例。
 
