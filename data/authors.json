@@ -1,0 +1,14 @@
+[
+  {"id": "a1",  "name": "Yuki Tanaka",     "affiliation": "The University of Tokyo",                   "country": "JP"},
+  {"id": "a2",  "name": "John Smith",      "affiliation": "Stanford University",                      "country": "US"},
+  {"id": "a3",  "name": "Aiko Sato",       "affiliation": "RIKEN",                                    "country": "Japan"},
+  {"id": "a4",  "name": "Wei Chen",        "affiliation": "Tsinghua University",                      "country": "CN"},
+  {"id": "a5",  "name": "Maria Garcia",    "affiliation": "MIT",                                      "country": "US"},
+  {"id": "a6",  "name": "Tom Baker",       "affiliation": "DeepMind",                                 "country": "UK"},
+  {"id": "a7",  "name": "Kenji Mori",      "affiliation": "RIKEN AIP, Wako, Japan",                   "country": ""},
+  {"id": "a8",  "name": "Hana Kobayashi",  "affiliation": "Kyoto University",                         "country": "JP"},
+  {"id": "a9",  "name": "Alice Johnson",   "affiliation": "Carnegie Mellon University",               "country": "US"},
+  {"id": "a10", "name": "Bob Lee",         "affiliation": "Google Research",                          "country": "US"},
+  {"id": "a11", "name": "Sho Yamada",      "affiliation": "NTT Communication Science Laboratories",    "country": "jp"},
+  {"id": "a12", "name": "Rin Nakamura",    "affiliation": "Osaka University",                         "country": null}
+]

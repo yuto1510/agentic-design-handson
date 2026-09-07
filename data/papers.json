@@ -1,0 +1,37 @@
+[
+  {"id": "p001", "doi": "10.1000/agent-a", "title": "A Survey of LLM Agent Architectures",
+   "year": 2024, "venue": "NeurIPS 2024", "author_ids": ["a1", "a2"]},
+
+  {"id": "p002", "doi": "10.1000/agent-a", "title": "A Survey of LLM Agent Architectures (Extended Version)",
+   "year": 2024, "venue": "arXiv preprint", "author_ids": ["a1", "a2"]},
+
+  {"id": "p003", "doi": "10.1000/agent-b", "title": "Tool-Using Agents for Scientific Discovery",
+   "year": 2025, "venue": "ICML 2025", "author_ids": ["a3", "a4"]},
+
+  {"id": "p004", "doi": "10.1000/agent-c", "title": "Multi-Agent Reinforcement Learning at Scale",
+   "year": 2023, "venue": "ICLR 2023", "author_ids": ["a1", "a5"]},
+
+  {"id": "p005", "doi": "10.1000/agent-d", "title": "Retrieval-Augmented Agents",
+   "year": 2024, "venue": "ACL 2024", "author_ids": ["a5", "a6"]},
+
+  {"id": "p006", "doi": "10.1000/agent-e", "title": "Agentic Workflows for Code Repair",
+   "year": 2024, "venue": "FSE 2024", "author_ids": ["a7"]},
+
+  {"id": "p007", "doi": "10.1000/agent-f", "title": "Emergent Deception in Autonomous Agents",
+   "year": 2025, "venue": "AAAI 2025", "author_ids": ["a8"]},
+
+  {"id": "p008", "doi": "10.1000/agent-g", "title": "Memory Systems for Long-Horizon Agents",
+   "year": 2024, "venue": "EMNLP 2024", "author_ids": ["a9", "a10", "a1"]},
+
+  {"id": "p009", "doi": "10.1000/agent-h", "title": "Agent-Based Modeling of Urban Traffic Flow",
+   "year": 2024, "venue": "Transportation Research Part C", "author_ids": ["a3"]},
+
+  {"id": "p010", "doi": "10.1000/agent-i", "title": "Agent Benchmarks Revisited",
+   "year": 2024, "venue": "TMLR", "author_ids": ["a11"]},
+
+  {"id": "p011", "doi": "10.1000/agent-j", "title": "Planning with Language Model Agents",
+   "year": 2025, "venue": "arXiv preprint", "author_ids": ["a12"]},
+
+  {"id": "p012", "doi": "10.1000/agent-j-v2", "title": "Planning with Language-Model Agents",
+   "year": 2025, "venue": "ICLR 2025", "author_ids": ["a12"]}
+]

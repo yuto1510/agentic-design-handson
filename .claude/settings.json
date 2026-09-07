@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./data/**)",
+      "Edit(./data/**)",
+      "Bash(cat ./data/**)",
+      "Bash(cat data/**)",
+      "Read(./WORKSHOP.md)",
+      "Read(./README.md)",
+      "Bash(cat ./WORKSHOP.md)",
+      "Bash(cat WORKSHOP.md)",
+      "Bash(cat ./README.md)",
+      "Bash(cat README.md)"
+    ]
+  }
+}

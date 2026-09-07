@@ -1,0 +1,16 @@
+# このハンズオン用のプロジェクト設定（Codex）。
+# 参考: Claude Code 側は .claude/settings.json
+#
+# 注意: Codex には「特定ファイルの読み取りを禁止する」設定がない。
+# data/ / WORKSHOP.md / README.md を読まないことは AGENTS.md の指示に依存する。
+# ここで固定できるのは書き込み範囲とネットワークだけ。
+
+# Step 3 でリポジトリ内にファイルを作る必要があるため workspace-write。
+sandbox_mode = "workspace-write"
+
+# 実行のたびに止まらないようにする。必要な操作だけ都度承認を求める。
+approval_policy = "on-request"
+
+[sandbox_workspace_write]
+# このハンズオンは外部 API を使わない。外向き通信を塞いでおく。
+network_access = false
