@@ -9,7 +9,8 @@
 #
 # 直接 ./compare.sh を呼んでもよい（既定は claude、AGENT=... で切り替え）。
 set -u
-OUT=$(mktemp -d)
+# mktemp -d は BSD（macOS）だとテンプレート必須の場合があるのでフォールバックする
+OUT=$(mktemp -d 2>/dev/null || mktemp -d -t compare)
 AGENT=${AGENT:-claude}
 
 REQUEST='「2024年以降に公開された Agent 関連の論文で、日本の研究機関に所属する著者が含まれ、
