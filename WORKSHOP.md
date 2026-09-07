@@ -288,7 +288,9 @@ flowchart TD
 
 Step 1 と骨格は同じ。変わるのは **tool の粒度**と、**Claude 側に残る処理**。
 
-### 動かす
+### LLM から Python に渡るもの
+
+Claude は通さない。普通のターミナルでそのまま動く。
 
 ```bash
 git checkout deterministic
@@ -297,8 +299,9 @@ echo '{"keywords":["agent"],"year_min":2024,"countries":["JP"],"exclude_retracte
   | python3 workflow.py
 ```
 
-これが workflow の全入力。Step 4 の「改善後」で Claude がやっていたのは、
-この JSON を組み立てて渡し、返ってきた結果を読むことだけ。
+**この JSON が、LLM から Python に渡る全部。** 論文ごとの判断は 1 つも入っていない。
+Step 4 の「改善後」で Claude がやっていたのは、要求からこの JSON を組み立てて渡し、
+返ってきた結果を読むことだけ。
 
 ### Step 2 の表に対する解答例
 
