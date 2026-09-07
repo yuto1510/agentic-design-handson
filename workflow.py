@@ -89,8 +89,33 @@ def run(q):
         out.append({**p, "matched_authors": [a["name"] for a in matched]})
 
     out = dedupe(out)
-    return {"query": q, "count": len(out), "papers": out}
+    applied = {"keywords": keywords, "year_min": year_min,
+               "countries": sorted(countries), "exclude_retracted": exclude_retracted}
+    return {"applied": applied, "count": len(out), "papers": out}
 
 
-json.dump(run(json.load(sys.stdin)), sys.stdout, ensure_ascii=False, indent=2)
+# --- インターフェース ---------------------------------------------------
+KNOWN = {"keywords", "year_min", "countries", "exclude_retracted"}
+
+USAGE = """受け取る構造化クエリ (stdin, JSON):
+  keywords          list[str]  タイトルの部分一致。大文字小文字は無視
+  year_min          int        公開年の下限 (>=)
+  countries         list[str]  著者の所属国。ISO コード ("JP" など)
+  exclude_retracted bool       撤回論文を除外する。既定 true
+
+  echo '{"keywords":["agent"],"year_min":2024,"countries":["JP"]}' | python3 workflow.py
+
+返すもの: {"applied": 実際に適用した条件, "count": 件数, "papers": [...]}
+"""
+
+if "--help" in sys.argv[1:] or "-h" in sys.argv[1:]:
+    print(__doc__.strip() + "\n\n" + USAGE)
+    sys.exit(0)
+
+q = json.load(sys.stdin)
+unknown = sorted(set(q) - KNOWN)
+if unknown:                                  # 黙って無視すると条件が静かに消える
+    sys.exit("unknown keys: %s\nvalid keys: %s" % (unknown, sorted(KNOWN)))
+
+json.dump(run(q), sys.stdout, ensure_ascii=False, indent=2)
 print()
